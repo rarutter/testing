@@ -5,35 +5,37 @@ from pprint import pprint
 
 import time #for sleep
 from watchdog.observers import Observer
-from watchdog.events import PatternMatchingEventHandler
-from watchdog.events import FileModifiedEvent
+from watchdog.events import FileSystemEventHandler
 
-class Handler(PatternMatchingEventHandler):
-    patterns = ["*.json"]
+import os #for getext()
 
-    def process(self, event):
-        """
-        event.event_type 
-            'modified' | 'created' | 'moved' | 'deleted'
-        event.is_directory
-            True | False
-        event.src_path
-            path/to/observed/file
-        """
-        # the file will be processed there
-        print event.src_path, event.event_type  # print now only for degug
+def getext(filename):
+    return os.path.splitext(filename)[-1].lower()
+
+class ChangeHandler(FileSystemEventHandler):
+
+    """
+    event.event_type 
+        'modified' | 'created' | 'moved' | 'deleted'
+    event.is_directory
+        True | False
+    event.src_path
+        path/to/observed/file
+    """
 
     def on_modified(self, event):
-        self.process(event)
+        if getext(event.src_path) == '.json':
+            print "modify" 
 
     def on_created(self, event):
-        self.process(event)
+        if getext(event.src_path) == '.json':
+            print "create"
 
 
 if __name__ == '__main__':
-    args = sys.argv[1:]
+    event_handler = ChangeHandler()
     observer = Observer()
-    observer.schedule(Handler(), path=args[0] if args else '.')
+    observer.schedule(event_handler, '.')
     observer.start()
 
     try:
