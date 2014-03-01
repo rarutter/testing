@@ -2,10 +2,11 @@
 
 #include <iostream>
 #include <json/writer.h>
-#include <cstdlib>
-#include <random>
-#include <functional> //for std::bind
+#include <cstdlib> //Unnecessary in real version?
+#include <random> //Unnecessary in real version
 #include <fstream>
+#include <unistd.h> //For Sleep(). Unnecessary in real version.
+
 
 int main(){
 
@@ -13,27 +14,30 @@ int main(){
 
     srand (time(NULL));
 
-    std::default_random_engine generator;
-    std::uniform_int_distribution<int> distribution(1,20);
-    auto roll = std::bind(distribution, generator);
-
     std::ofstream out_stream("output.json", std::ofstream::out);
 
-    for(int ii=0; ii<1; ii++){
+    for(int ii=0; ii<200; ii++){
    
         //Monthly Thermal information 
-        data["TempAir"] = roll();
-        data["TempOrganicLayer"] = roll();
-        data["TempMineralLayer"] = roll(); 
-        data["PAR"] = roll();
-        data["ActiveLayerDepth"] = roll();
+        data["TempAir"] = rand()%100;
+        data["TempOrganicLayer"] = rand()%100;
+        data["TempMineralLayer"] = rand()%100;
+        data["PAR"] = rand()%100;
+        data["ActiveLayerDepth"] = rand()%100;
 
         //Monthly Hydrodynamic information
         //etc...
 
-        out_stream << data << std::endl;
+        //std::cout << data << std::endl;
+        std::cout << ii << " " << std::endl;
 
+        out_stream << data << std::endl;
+        out_stream.seekp(std::ios::beg);
+
+        sleep(1);
     }
+
+    std::cout<<std::endl;
 
     out_stream.close();
 
