@@ -22,16 +22,24 @@ int main(){
 
     for(int year=0; year<5000; year++){
     for(int month=0; month<12; month++){
+
+        data["Year"] = year;
+        data["Month"] = month;
    
         //Monthly Thermal information 
-        data["TempAir"] = rand()%100;
-        data["TempOrganicLayer"] = rand()%100;
-        data["TempMineralLayer"] = rand()%100;
-        data["PAR"] = rand()%100;
-        data["ActiveLayerDepth"] = rand()%100;
+        data["TempAir"] = rand()%100*1.0;
+        data["TempOrganicLayer"] = rand()%100*1.0;
+        data["TempMineralLayer"] = rand()%100*1.0;
+        data["PAR"] = rand()%100*1.0;
+        data["ActiveLayerDepth"] = rand()%100*1.0;
 
         //Monthly Hydrodynamic information
-        //etc...
+        data["Precipitation"] = rand()%100*1.0;
+        data["WaterTable"] = rand()%100*1.0;
+        data["VWCOrganicLayer"] = rand()%100*1.0;
+        data["VWCMineralLayer"] = rand()%100*1.0;
+        data["Evapotranspiration"] = rand()%100*1.0;
+
 
         //std::cout << data << std::endl;
         std::cout << "year: "<<year<<", month: "<<month<<std::endl;
