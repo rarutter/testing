@@ -6,6 +6,9 @@
 #include <random> //Unnecessary in real version
 #include <fstream>
 #include <unistd.h> //For Sleep(). Unnecessary in real version.
+
+//for output filename stuff
+#include <iomanip>
 #include <sstream>
 
 
@@ -17,7 +20,7 @@ int main(){
 
     std::ofstream out_stream;
 
-    for(int year=1000; year<2000; year++){//to guarantee 4-digit year values
+    for(int year=0; year<5000; year++){
     for(int month=0; month<12; month++){
    
         //Monthly Thermal information 
@@ -31,10 +34,11 @@ int main(){
         //etc...
 
         //std::cout << data << std::endl;
-        std::cout << year << " " << month << std::endl;
+        std::cout << "year: "<<year<<", month: "<<month<<std::endl;
 
         std::stringstream filename;
-        filename << year << "_" << month << ".json";
+        filename.fill('0');
+        filename << std::setw(4) << year << "_" << std::setw(2) << month << ".json";
         //std::string filename = year.itoa() + "_" + month.itoa() + ".json";
         out_stream.open(filename.str(), std::ofstream::out);
 
