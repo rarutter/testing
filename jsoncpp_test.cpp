@@ -3,7 +3,7 @@
 #include <iostream>
 #include <json/writer.h>
 #include <cstdlib> //Unnecessary in real version?
-#include <random> //Unnecessary in real version
+//#include <random> //Unnecessary in real version
 #include <fstream>
 #include <unistd.h> //For Sleep(). Unnecessary in real version.
 
@@ -47,8 +47,8 @@ int main(){
         std::stringstream filename;
         filename.fill('0');
         filename << std::setw(4) << year << "_" << std::setw(2) << month << ".json";
-        //std::string filename = year.itoa() + "_" + month.itoa() + ".json";
-        out_stream.open(filename.str(), std::ofstream::out);
+
+        out_stream.open(filename.str().c_str(), std::ofstream::out);
 
         out_stream << data << std::endl;
 
